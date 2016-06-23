@@ -8,7 +8,7 @@ module GooglePlaySearch
                   :version, :installs, :last_updated, :size,
                   :requires_android, :content_rating, :developer_website,
                   :developer_email, :developer_address, :screenshots,
-                  :long_description
+                  :long_description, :pre_register
 
     def get_all_details()
       html = HTTPClient.new.get(self.url).body

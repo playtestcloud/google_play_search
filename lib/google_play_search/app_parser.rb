@@ -88,6 +88,13 @@ module GooglePlaySearch
       return "0"
     end
 
+    def needs_preregistration(app_content)
+      pre_register_label = app_content.css("div.reason-set span.price-container a.non-offer-badge")
+      if pre_register_label && pre_register_label.last
+        return pre_register_label.last.content == "Coming Soon"
+      end
+    end
+
     def create_app(app_content)
       app = App.new
       app.url = get_url app_content
@@ -98,6 +105,7 @@ module GooglePlaySearch
       app.logo_url = get_logo_url app_content
       app.short_description = get_short_description app_content
       app.rating = get_app_rating app_content
+      app.pre_register = needs_preregistration app_content
       return app
     end
   end

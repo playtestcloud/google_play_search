@@ -26,7 +26,10 @@ module GooglePlaySearch
       @keyword = keyword
       page = HTTPClient.new.get(GOOGLE_PLAY_BASE_SEARCH_URL, query_params).body
       get_next_page_token(page)
-      AppParser.new(page).parse
+      
+      app_list = AppParser.new(page).parse
+      return app_list.reject(&:pre_register) if options[:filter_by_pre_register]
+      app_list
     end
 
     def next_page()
